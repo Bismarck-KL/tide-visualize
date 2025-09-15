@@ -74,6 +74,10 @@ sand_color = (194, 178, 128)  # Sandy color
 grain_color = (255, 228, 196)  # Light beige for grains of sand
 wave_color = (0, 105, 148)    # Dark blue for the waves
 
+# Text
+border_color = (255, 255, 255)
+
+
 # Star Timing control
 last_time = time.time()
 hour_increment_interval = 0.1  # Interval in seconds for each hour
