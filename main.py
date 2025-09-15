@@ -148,6 +148,35 @@ def draw_ui():
     pygame.draw.rect(screen, black if day else white, tide_text_rect.inflate(20, 10), 2)
     screen.blit(tide_text, tide_text_rect)
 
+    # Speed
+    speed_text = tide_font.render("Seconds/hour: {}".format(seconds_per_hour), True, black if day else white)
+    speed_text_rect = speed_text.get_rect()
+    speed_text_rect.topright = (width - 20, 20) 
+    screen.blit(speed_text, speed_text_rect)
+
+
+def user_input(key):
+
+    global hour_increment_interval
+    global seconds_per_hour
+    global move_speed
+    global sea_move_speed
+
+    if key == pygame.K_RIGHT:
+        if hour_increment_interval < 3:
+            hour_increment_interval+=1
+            if hour_increment_interval >=3:
+                hour_increment_interval = 3
+            seconds_per_hour = hour_increment_interval
+    elif key == pygame.K_LEFT:
+        if hour_increment_interval > 0:
+            hour_increment_interval-=1
+            if hour_increment_interval<=0:
+                hour_increment_interval = 0.1
+            seconds_per_hour = hour_increment_interval
+
+    move_speed = (width / 12) / (seconds_per_hour * (frame_per_seconds / 1)) 
+    sea_move_speed = (height / 2 / 10) / (seconds_per_hour * frame_per_seconds * 2) 
 
 
 # Main loop
@@ -158,6 +187,8 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
+        elif event.type == pygame.KEYUP:
+            user_input(event.key)
 
     # Set the background color based on the time of day
     day = 6 < current_hour < 19
