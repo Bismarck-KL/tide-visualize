@@ -59,6 +59,9 @@ pygame.display.set_caption("Tide Visualize")
 # Initialize pygame
 pygame.init()
 
+# init mixer
+pygame.mixer.init()
+
 # Font setup
 title_font = pygame.font.Font(None, 34) 
 tide_font = pygame.font.Font(None, 12) 
@@ -76,7 +79,6 @@ wave_color = (0, 105, 148)    # Dark blue for the waves
 
 # Text
 border_color = (255, 255, 255)
-
 
 # Star Timing control
 last_time = time.time()
@@ -141,7 +143,6 @@ water_particles = [(random.randint(0, width), random.randint(height // 2, height
 sea_current_height = 0  # Start at the midpoint
 sea_target_height = height / 2  # Initial target
 sea_move_speed = (height / 2 / 10) / (seconds_per_hour * frame_per_seconds * 2) 
-
 
 def draw_beach():
 
