@@ -197,6 +197,41 @@ def draw_beach():
         pygame.draw.circle(screen, grain_color, (x, int(y)), random.randint(1, 3))
 
 
+seagull_x = 0
+seagull_y = height // 6
+flap_direction = 1  # 1 for moving up, -1 for moving down
+flap_speed = 1      # Speed of flapping
+show_seagull = False
+
+
+def draw_seagulls():
+
+    global seagull_x
+    global seagull_y
+    global flap_direction
+    global flap_speed
+    global show_seagull
+
+    # Inside your main loop, update the seagull position
+    seagull_x += (2*(4-seconds_per_hour))  # Move the seagull across the screen
+    seagull_y += (flap_direction * flap_speed)*(4-seconds_per_hour)  # Move up or down
+
+    # Change flap direction at certain heights
+    if seagull_y >= height // 6 + 10:  # Maximum height
+        flap_direction = -1
+    elif seagull_y <= height // 6 - 10:  # Minimum height
+        flap_direction = 1
+
+    # Draw the seagull (simple representation)
+    pygame.draw.polygon(screen, (255, 255, 255), [(seagull_x, seagull_y), (seagull_x + 10, seagull_y + 5), (seagull_x + 20, seagull_y)])
+    pygame.draw.polygon(screen, (255, 255, 255), [(seagull_x + 10, seagull_y), (seagull_x + 20, seagull_y + 5), (seagull_x + 30, seagull_y)])
+
+    # Reset when it goes off screen
+    if seagull_x > width:
+        seagull_x = 0
+        seagull_y = height // 6  # Reset to initial height
+        show_seagull = False
+
 def draw_ui():
 
     # Display the current hour in the left side of the screen
@@ -271,6 +306,9 @@ while running:
     draw_moon()
     draw_beach()
 
+    if show_seagull:
+        draw_seagulls()
+
     # Draw UI
     draw_ui()
 
@@ -287,6 +325,9 @@ while running:
         current_hour = 0
         if current_date_index < len(data_array):
             current_date_index+=1
+            if (random.randint(0, 10)) <= 3:
+                if not show_seagull:
+                    show_seagull = True
         else:
             current_date_index=0
 
