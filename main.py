@@ -293,5 +293,7 @@ while running:
     # Frame rate
     clock.tick(frame_per_seconds) 
 
-# Quit pygame
+# Stop the music and Quit Pygame 
+pygame.mixer.music.stop()
+pygame.mixer.quit()
 pygame.quit()
