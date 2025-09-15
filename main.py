@@ -172,6 +172,7 @@ while running:
     draw_sun()
     draw_moon()
 
+    # Draw UI
     draw_ui()
 
     # Update display
@@ -190,6 +191,8 @@ while running:
         else:
             current_date_index=0
 
+    # Frame rate
+    clock.tick(frame_per_seconds) 
 
 # Quit pygame
 pygame.quit()
