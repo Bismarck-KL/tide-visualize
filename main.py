@@ -61,6 +61,15 @@ pygame.init()
 
 # init mixer
 pygame.mixer.init()
+# Set up music
+bgmfilename = os.getenv('FILENAME', "wave_env.mp3")
+try:
+    pygame.mixer.music.load(bgmfilename)
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(loops=-1)  # Loop
+except pygame.error as e:
+    print(f"Error loading music file: {e}")
+    
 
 # Font setup
 title_font = pygame.font.Font(None, 34) 
