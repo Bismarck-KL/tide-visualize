@@ -206,7 +206,7 @@ def draw_ui():
     screen.blit(tide_text, tide_text_rect)
 
     # Speed
-    speed_text = tide_font.render("Seconds/hour: {}".format(seconds_per_hour), True, black if day else white)
+    speed_text = tide_font.render("Seconds/hour: {}".format(seconds_per_hour), True, black)
     speed_text_rect = speed_text.get_rect()
     speed_text_rect.topright = (width - 20, 20) 
     screen.blit(speed_text, speed_text_rect)
