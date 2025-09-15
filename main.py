@@ -51,6 +51,11 @@ current_month = 0
 current_day = 0
 
 
+# Set up display
+width, height = 800, 600
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Tide Visualize")
+
 # Initialize pygame
 pygame.init()
 
@@ -63,6 +68,8 @@ black = (0, 0, 0)  # Black
 white = (255, 255, 255) # White
 blue = (135, 206, 235)  # Sky blue
 night_black = (20, 20, 20)  # Night background
+sun_color = (255, 128, 0)  # Sun color
+moon_color = (200, 200, 100)  # Moon color
 
 
 # Star Timing control
@@ -70,6 +77,57 @@ last_time = time.time()
 hour_increment_interval = 0.1  # Interval in seconds for each hour
 seconds_per_hour = hour_increment_interval  # Total seconds for each hour in the animation
 frame_per_seconds = 60
+move_speed = (width / 12) / (seconds_per_hour * (frame_per_seconds / 1))  # Speed calculation
+
+# Initialize Star positions
+starPositionY = height / 4
+sun_x = 0.0
+moon_x = width / 2  # Start the moon in the middle of the screen
+
+def draw_sun():
+    global sun_x
+
+    # Calculate sun position
+    if 6 <= current_hour <= 18:
+        sunTargetX = (width / 12) * (current_hour - 6)  # Move from 0 to width
+        sun_y = starPositionY
+    else:
+        sun_x, sunTargetX, sun_y = -100, -100, -100  # Offscreen
+
+    # Smoothly increment sun_x towards sunTargetX
+    if sun_x < sunTargetX:
+        sun_x += move_speed  # Adjust speed for smooth movement
+
+    # Draw sun if it's visible
+    if 6 < current_hour <= 18:
+        pygame.draw.circle(screen, sun_color, (int(sun_x), int(sun_y)), 30)
+
+def draw_moon():
+    global moon_x
+
+    # Calculate moon position
+    if current_hour >= 18:
+        moonTargetX = (width / 12) * (current_hour - 18)  # Move from center to left
+        moon_y = starPositionY
+    elif current_hour <= 6:
+        moonTargetX = width / 2 + (width / 12) * current_hour  # Move right from center
+        moon_y = starPositionY
+    else:
+        moon_x, moon_y,moonTargetX = 0, -100,-100  # Offscreen
+
+    # Smoothly increment moon_x towards moonTargetX
+    if 18 < current_hour < 24 or 0 <= current_hour < 7:
+        if moon_x < moonTargetX:
+            moon_x += move_speed  # Adjust speed for smooth movement
+        # pygame.draw.circle(screen, moon_color, (int(moon_x), int(moon_y)), 30)
+
+        # Create a surface for the moon
+        moon_surface = pygame.Surface((60, 60), pygame.SRCALPHA)  # Create a transparent surface
+        pygame.draw.circle(moon_surface, moon_color, (30, 30), 30)  # Draw full moon
+        pygame.draw.rect(moon_surface, (0, 0, 0, 0), (0, 0, 30, 60))  # Cover half with transparency
+
+        # Blit the moon surface onto the main screen
+        screen.blit(moon_surface, (moon_x - 30, moon_y - 30))  # Adjust position
 
 
 def draw_ui():
@@ -92,11 +150,6 @@ def draw_ui():
 
 
 
-# Set up display
-width, height = 800, 600
-screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Tide Visualize")
-
 # Main loop
 while running:
     for event in pygame.event.get():
@@ -113,6 +166,11 @@ while running:
     current_date = data_array[current_date_index]
     current_month = int(current_date[0] // 100)
     current_day = int(current_date[0] % 100)
+
+
+    # Draw the elements
+    draw_sun()
+    draw_moon()
 
     draw_ui()
 
