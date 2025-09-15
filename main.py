@@ -208,7 +208,7 @@ def draw_ui():
     screen.blit(hour_text, text_rect)
 
     # Tide data
-    tide_text = tide_font.render("Tide:"+str(data_array[current_date_index][current_hour+1]), True, black if day else white)
+    tide_text = tide_font.render("Tide:"+str(data_array[current_date_index][current_hour+1]), True, black)
     tide_text_rect = tide_text.get_rect()
     tide_text_rect.centerx = width // 2  # Center horizontally
     tide_text_rect.bottom = height - 20  # Position bottom 50 pixels from the bottom
@@ -216,7 +216,7 @@ def draw_ui():
     screen.blit(tide_text, tide_text_rect)
 
     # Speed
-    speed_text = tide_font.render("Seconds/hour: {}".format(seconds_per_hour), True, black)
+    speed_text = tide_font.render("Seconds/hour: {}".format(seconds_per_hour), True, black if day else white)
     speed_text_rect = speed_text.get_rect()
     speed_text_rect.topright = (width - 20, 20) 
     screen.blit(speed_text, speed_text_rect)
