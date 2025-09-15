@@ -90,11 +90,6 @@ def draw_ui():
     pygame.draw.rect(screen, black if day else white, tide_text_rect.inflate(20, 10), 2)
     screen.blit(tide_text, tide_text_rect)
 
-    # Speed
-    speed_text = tide_font.render("Seconds/hour: {}".format(seconds_per_hour), True, black if day else white)
-    speed_text_rect = speed_text.get_rect()
-    speed_text_rect.topright = (width - 20, 20) 
-    screen.blit(speed_text, speed_text_rect)
 
 
 # Set up display
@@ -119,6 +114,7 @@ while running:
     current_month = int(current_date[0] // 100)
     current_day = int(current_date[0] % 100)
 
+    draw_ui()
 
     # Update display
     pygame.display.flip()
