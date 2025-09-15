@@ -70,7 +70,9 @@ blue = (135, 206, 235)  # Sky blue
 night_black = (20, 20, 20)  # Night background
 sun_color = (255, 128, 0)  # Sun color
 moon_color = (200, 200, 100)  # Moon color
-
+sand_color = (194, 178, 128)  # Sandy color
+grain_color = (255, 228, 196)  # Light beige for grains of sand
+wave_color = (0, 105, 148)    # Dark blue for the waves
 
 # Star Timing control
 last_time = time.time()
@@ -128,6 +130,57 @@ def draw_moon():
 
         # Blit the moon surface onto the main screen
         screen.blit(moon_surface, (moon_x - 30, moon_y - 30))  # Adjust position
+
+# Create water particles within the sea area
+water_particles = [(random.randint(0, width), random.randint(height // 2, height // 2 + 100)) for _ in range(20)]  # Example init
+#  Sea control
+sea_current_height = 0  # Start at the midpoint
+sea_target_height = height / 2  # Initial target
+sea_move_speed = (height / 2 / 10) / (seconds_per_hour * frame_per_seconds * 2) 
+
+
+def draw_beach():
+
+    global sea_current_height, sea_target_height
+    # Calculate sea target height based on data
+    sea_target_height = height / 7 * (data_array[current_date_index][current_hour + 1] / 2)
+    # print(f"sea_current_height: {sea_current_height}/{sea_target_height}")
+
+    # Smoothly update current sea height
+    if sea_current_height < sea_target_height:
+        sea_current_height += sea_move_speed
+        if sea_current_height > sea_target_height:  # Prevent overshooting
+            sea_current_height = sea_target_height
+    elif sea_current_height > sea_target_height:
+        sea_current_height -= sea_move_speed
+        if sea_current_height < sea_target_height:  # Prevent overshooting
+            sea_current_height = sea_target_height
+
+    # Draw the sand
+    pygame.draw.rect(screen, sand_color, (0, height / 2, width, height / 3 * 2))
+
+    # Draw the sea (filled rectangle)
+    pygame.draw.rect(screen, wave_color, (0, height / 2, width, sea_current_height))
+
+    # Draw waves
+    for x in range(0, width, 20):
+        pygame.draw.arc(screen, white, 
+                        (x, height / 2 + sea_current_height - 30, 40, 40), 
+                        3.14, 0, 5) 
+
+    # Update particle positions for slow movement
+    for i, (x, y) in enumerate(water_particles):
+        y += random.choice([-0.5, 0.5])  # Move slowly up or down
+        # Keep particles within the sea height
+        if y < (height / 2 + 5):
+            y = (height / 2 + 5)
+        elif y > height / 2 + sea_current_height:
+            y = height / 2 + sea_current_height
+        water_particles[i] = (x, y)
+
+    # Draw particles
+    for x, y in water_particles:
+        pygame.draw.circle(screen, grain_color, (x, int(y)), random.randint(1, 3))
 
 
 def draw_ui():
@@ -202,6 +255,7 @@ while running:
     # Draw the elements
     draw_sun()
     draw_moon()
+    draw_beach()
 
     # Draw UI
     draw_ui()
