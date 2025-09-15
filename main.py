@@ -3,6 +3,7 @@ from lxml import html
 import numpy as np
 import dotenv
 import os
+import pygame
 
 # Load environment variables
 dotenv.load_dotenv()
@@ -32,5 +33,31 @@ for row in rows:
 
 # Convert the data_list to a 2D NumPy array
 data_array = np.array(data_list)
-print("data_array:",data_array)
+# print("data_array:",data_array)
 
+
+# Set up 
+running = True
+
+pygame.init()
+
+# Set up display
+width, height = 800, 600
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Tide Visualize")
+
+# Main loop
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+
+
+    # Update display
+    pygame.display.flip()
+
+# Quit pygame
+pygame.quit()
