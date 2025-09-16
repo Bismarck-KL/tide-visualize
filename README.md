@@ -44,7 +44,7 @@ Tide Visualize is an interactive simulation that visualizes tide changes based o
     ROW_XPATH=<your_xpath_for_rows>
     Replace <your_tide_data_url> with the URL from which to fetch tide data, and <your_xpath_for_rows> with the appropriate XPath to extract data rows.
 
-Running the Application
+## Running the Application
     
     1. Ensure you are in the project directory with the virtual environment activated.
     2. Run the application:
@@ -57,14 +57,14 @@ Running the Application
         iii. Left Mouse Click: Create stars at the clicked location.
         iv. Escape Key: Exit the application.
 
-File Structure
+## File Structure
 
     tide-visualize/
     ├── tide_visualize.py       # Main application file
     ├── requirements.txt        # Python dependencies
     └── .env                    # Environment variables
 
-Dependencies
+## Dependencies
 
     Make sure to install the following dependencies using pip:
         * requests
@@ -74,17 +74,18 @@ Dependencies
         * python-dotenv
     
     You can install them by running:
-        ```command
+        ```sh
         pip install requests lxml numpy pygame python-dotenv
+        ```
 
-License
+## License
     This project is licensed under the MIT License - see the LICENSE file for details.
     BGM music are using youtube: https://www.youtube.com/watch?v=Wxs5e7RUW6k&t=5247s&ab_channel=WorldMusicCreation%E9%9F%B3%E6%A8%82%E4%B8%96%E7%95%8C
 
 
-Acknowledgments
+## Acknowledgments
     Thanks to the creators of the libraries used in this project.
     Special thanks to the contributors and community for their support.
 
 
-Feel free to modify any section as needed, especially the URLs and any specific details related to your project!
+    Feel free to modify any section as needed, especially the URLs and any specific details related to your project!
