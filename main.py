@@ -50,6 +50,8 @@ current_date = 0
 current_month = 0
 current_day = 0
 
+# music settings
+bgm_volume = 0.2
 
 # Set up display
 width, height = 800, 600
@@ -65,7 +67,7 @@ pygame.mixer.init()
 bgmfilename = os.getenv('FILENAME', "wave_env.mp3")
 try:
     pygame.mixer.music.load(bgmfilename)
-    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.set_volume(bgm_volume)
     pygame.mixer.music.play(loops=-1)  # Loop
 except pygame.error as e:
     print(f"Error loading music file: {e}")
@@ -263,6 +265,7 @@ def user_input(key):
     global seconds_per_hour
     global move_speed
     global sea_move_speed
+    global bgm_volume
 
     if key == pygame.K_RIGHT:
         if hour_increment_interval < 3:
@@ -279,6 +282,20 @@ def user_input(key):
 
     move_speed = (width / 12) / (seconds_per_hour * (frame_per_seconds / 1)) 
     sea_move_speed = (height / 2 / 10) / (seconds_per_hour * frame_per_seconds * 2) 
+
+    # Control volume    
+    if key == pygame.K_UP:
+        if bgm_volume < 1.0:
+            bgm_volume += 0.1
+            if bgm_volume >= 1.0:
+                bgm_volume = 1.0
+    elif key == pygame.K_DOWN:
+        if bgm_volume > 0.0:
+            bgm_volume -= 0.1
+            if bgm_volume <= 0.0:
+                bgm_volume = 0.0
+
+    pygame.mixer.music.set_volume(bgm_volume)
 
 
 # Main loop
