@@ -237,7 +237,7 @@ def draw_seagulls():
 def draw_ui():
 
     # Display the current hour in the left side of the screen
-    hour_text = title_font.render(str(current_day) + "/" + str(current_month) + " - " + str(current_hour)+":00", True, black if day else white)
+    hour_text  = title_font.render(f"{current_day:02}/{current_month:02} - {current_hour}:00", True, black if day else white)
     text_rect = hour_text.get_rect(topleft = (20, 20))
     # Draw the border rectangle
     pygame.draw.rect(screen, black if day else white, text_rect.inflate(20, 10), 2)
@@ -257,7 +257,6 @@ def draw_ui():
     speed_text_rect = speed_text.get_rect()
     speed_text_rect.topright = (width - 20, 20) 
     screen.blit(speed_text, speed_text_rect)
-
 
 def user_input(key):
 
