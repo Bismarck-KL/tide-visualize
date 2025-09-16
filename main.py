@@ -296,6 +296,22 @@ def user_input(key):
 
     pygame.mixer.music.set_volume(bgm_volume)
 
+# Store stars as a list of (x, y, radius, color)
+stars = []
+
+def user_intereactive_input(button):
+
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+
+    if button == 1:  # Left click
+        if height / 2 <= mouse_y <= height / 2 + height / 3 * 2:
+            # Create a star at the mouse position
+            star_radius = random.randint(2, 5)
+            star_color = (255, 255, random.randint(180, 255))  # Slightly yellowish white
+            stars.append((mouse_x, mouse_y, star_radius, star_color))
+            print(f"Star created at ({mouse_x}, {mouse_y}) with radius {star_radius}")
+            
+
 
 # Main loop
 while running:
@@ -307,6 +323,8 @@ while running:
                 running = False
         elif event.type == pygame.KEYUP:
             user_input(event.key)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            user_intereactive_input(event.button)
 
     # Set the background color based on the time of day
     day = 6 < current_hour < 19
@@ -321,13 +339,18 @@ while running:
     draw_sun()
     draw_moon()
     draw_beach()
-
     if show_seagull:
         draw_seagulls()
 
     # Draw UI
     draw_ui()
 
+    # Draw all stars
+    for star in stars:
+        pygame.draw.circle(screen, star[3], (star[0], star[1]), star[2])
+
+    # Update display
+    pygame.display.flip()
     # Update display
     pygame.display.flip()
 
