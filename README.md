@@ -32,30 +32,28 @@ Tide Visualize is an interactive simulation that visualizes tide changes based o
 
 2. Install the required libraries:
 
-    ```csh
+    ```sh
     pip install -r requirements.txt
     ```
 
 3. Create a .env file in the project directory with the following variables:
-
-    URL=<your_tide_data_url>
-    YEAR=2024
-    FILENAME=page-2024.html
-    ROW_XPATH=<your_xpath_for_rows>
-    Replace <your_tide_data_url> with the URL from which to fetch tide data, and <your_xpath_for_rows> with the appropriate XPath to extract data rows.
+    - URL=<your_tide_data_url>
+    - YEAR=2024
+    - FILENAME=page-2024.html
+    - ROW_XPATH=<your_xpath_for_rows>
+    - Replace <your_tide_data_url> with the URL from which to fetch tide data, and <your_xpath_for_rows> with the appropriate XPath to extract data rows.
 
 ## Running the Application
-    
-    1. Ensure you are in the project directory with the virtual environment activated.
-    2. Run the application:
-        ```sh
-        python tide_visualize.py
-        ```
-    3. Use the following controls:
-        i. Arrow Keys: Adjust the speed of time progression.
-        ii. Up/Down Arrow: Control the volume of the background music.
-        iii. Left Mouse Click: Create stars at the clicked location.
-        iv. Escape Key: Exit the application.
+
+  1. Ensure you are in the project directory with the virtual environment activated.
+  2. Run the application:
+     ```sh
+     python tide_visualize.py     
+  3. Use the following controls:
+     - Arrow Keys: Adjust the speed of time progression.
+     - Up/Down Arrow: Control the volume of the background music.
+     - Left Mouse Click: Create stars at the clicked location.
+     - Escape Key: Exit the application.
 
 ## File Structure
 
@@ -66,17 +64,17 @@ Tide Visualize is an interactive simulation that visualizes tide changes based o
 
 ## Dependencies
 
-    Make sure to install the following dependencies using pip:
-        * requests
-        * lxml
-        * numpy
-        * pygame
-        * python-dotenv
-    
-    You can install them by running:
-        ```sh
-        pip install requests lxml numpy pygame python-dotenv
-        ```
+  Make sure to install the following dependencies using pip:
+    * requests
+    * lxml
+    * numpy
+    * pygame
+    * python-dotenv
+
+  You can install them by running:
+  ```sh
+  pip install requests lxml numpy pygame python-dotenv
+  ```
 
 ## License
     This project is licensed under the MIT License - see the LICENSE file for details.
