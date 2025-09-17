@@ -62,23 +62,17 @@ pygame.display.set_caption("Tide Visualize")
 # Initialize pygame
 pygame.init()
 
-loading_screen = pygame.display.set_mode((width, height))
-loading_font = pygame.font.Font(None, 16)
-def show_loading_message(message):
-    loading_screen.fill((0, 0, 0))  # Black background
-    text = loading_font.render(message, True, (255, 255, 255))  # White text
-    text_rect = text.get_rect(center=(width/2, height/2))
-    loading_screen.blit(text, text_rect)
-    pygame.display.flip()
-
-show_loading_message("Initializing audio system...")
+# Initialize loading screen
+from loading_screen import LoadingScreen
+loading = LoadingScreen(width, height)
+loading.show_message("Initializing audio system...")
 # init mixer
 pygame.mixer.init()
 # Set up music
 bgmfilename = os.getenv('FILENAME', "bgm.mp3")
 envfilename = os.getenv('FILENAME', "wave_env.mp3")
 try:
-    show_loading_message("Loading music files...")
+    loading.show_message("Loading music files...")
     pygame.mixer.music.load(bgmfilename)
     pygame.mixer.music.set_volume(bgm_volume)
     pygame.mixer.music.play(loops=-1)  # Loop
@@ -86,7 +80,7 @@ except pygame.error as e:
     print(f"Error loading music file: {e}")
 
 try:
-    show_loading_message("Loading environment sound files...")
+    loading.show_message("Loading environment sound files...")
     env_sound = pygame.mixer.Sound(envfilename)  # Create Sound object
     env_sound.set_volume(env_volume)
     env_sound.play(loops=-1)
