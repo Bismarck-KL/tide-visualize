@@ -338,16 +338,17 @@ while running:
     # Draw the elements
     draw_sun()
     draw_moon()
+
+    # Draw all stars
+    for star in stars:
+        pygame.draw.circle(screen, star[3], (star[0], star[1]), star[2])
+
     draw_beach()
     if show_seagull:
         draw_seagulls()
 
     # Draw UI
     draw_ui()
-
-    # Draw all stars
-    for star in stars:
-        pygame.draw.circle(screen, star[3], (star[0], star[1]), star[2])
 
     # Update display
     pygame.display.flip()
