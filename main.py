@@ -52,7 +52,7 @@ current_day = 0
 
 # music settings
 bgm_volume = 0.2
-env_volume = 0.2
+
 
 # Set up display
 width, height = 800, 600
@@ -71,6 +71,7 @@ pygame.mixer.init()
 # Set up music
 bgmfilename = os.getenv('FILENAME', "assets/sfx/bgm.mp3")
 envfilename = os.getenv('FILENAME', "assets/sfx/wave_env.mp3")
+
 try:
     loading.show_message("Loading music files...")
     pygame.mixer.music.load(bgmfilename)
@@ -82,7 +83,7 @@ except pygame.error as e:
 try:
     loading.show_message("Loading environment sound files...")
     env_sound = pygame.mixer.Sound(envfilename)  # Create Sound object
-    env_sound.set_volume(env_volume)
+    env_sound.set_volume(bgm_volume)
     env_sound.play(loops=-1)
 except pygame.error as e:
     print(f"Error loading sound file: {e}")
@@ -353,7 +354,11 @@ def user_input(key):
             seconds_per_hour = hour_increment_interval
     elif key == pygame.K_u:
             show_ui = not show_ui
-
+    elif key == pygame.K_i:
+        if pygame.mixer.music.get_busy():
+            pygame.mixer.music.pause() 
+        else:
+            pygame.mixer.music.unpause() 
 
     move_speed = (width / 12) / (seconds_per_hour * (frame_per_seconds / 1)) 
     sea_move_speed = (height / 2 / 10) / (seconds_per_hour * frame_per_seconds * 2) 
@@ -371,7 +376,7 @@ def user_input(key):
                 bgm_volume = 0.0
 
     pygame.mixer.music.set_volume(bgm_volume)
-
+    env_sound.set_volume(bgm_volume)
          
 
 # Main loop
