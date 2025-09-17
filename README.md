@@ -52,14 +52,18 @@ Tide Visualize is an interactive simulation that visualizes tide changes based o
   3. Use the following controls:
      - Arrow Keys: Adjust the speed of time progression.
      - Up/Down Arrow: Control the volume of the background music.
+     - U key: Enable/Disable the user interface.
      - Left Mouse Click: Create stars at the clicked location.
+     - Right Mouse Click: Screen capture.
      - Escape Key: Exit the application.
 
 ## File Structure
 
     tide-visualize/
     ├── tide_visualize.py       # Main application file
+    ├── loading_screen.py       # Loading screen file
     ├── requirements.txt        # Python dependencies
+    ├── assets/                 # Asset files
     └── .env                    # Environment variables
 
 ## Dependencies
@@ -76,10 +80,16 @@ Tide Visualize is an interactive simulation that visualizes tide changes based o
   pip install requests lxml numpy pygame python-dotenv
   ```
 
-## License
-    This project is licensed under the MIT License - see the LICENSE file for details.
-    Enviroment sound youtube link: https://www.youtube.com/watch?v=Wxs5e7RUW6k&t=5247s&ab_channel=WorldMusicCreation%E9%9F%B3%E6%A8%82%E4%B8%96%E7%95%8C
-    Background sound youtube link: https://www.youtube.com/watch?v=tKzOp1Zfahc&list=RDtKzOp1Zfahc&start_radio=1&ab_channel=dotnote
+## Sound and Background Music
+
+The sound effects and background music used in this project are sourced from YouTube. 
+
+If you would like to listen to or download the original tracks, please visit the following links:
+
+- [Enviroment sound](https://www.youtube.com/watch?v=Wxs5e7RUW6k&t=5247s&ab_channel=WorldMusicCreation%E9%9F%B3%E6%A8%82%E4%B8%96%E7%95%8C)
+- [Background music](https://www.youtube.com/watch?v=tKzOp1Zfahc&list=RDtKzOp1Zfahc&start_radio=1&ab_channel=dotnote)
+
+*Please ensure that you respect the copyright and licensing agreements associated with these tracks.*
 
 
 ## Acknowledgments
