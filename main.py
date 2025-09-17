@@ -69,8 +69,8 @@ loading.show_message("Initializing audio system...")
 # init mixer
 pygame.mixer.init()
 # Set up music
-bgmfilename = os.getenv('FILENAME', "bgm.mp3")
-envfilename = os.getenv('FILENAME', "wave_env.mp3")
+bgmfilename = os.getenv('FILENAME', "assets/sfx/bgm.mp3")
+envfilename = os.getenv('FILENAME', "assets/sfx/wave_env.mp3")
 try:
     loading.show_message("Loading music files...")
     pygame.mixer.music.load(bgmfilename)
