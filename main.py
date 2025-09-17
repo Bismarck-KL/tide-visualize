@@ -155,7 +155,7 @@ sea_current_height = 0  # Start at the midpoint
 sea_target_height = height / 2  # Initial target
 sea_move_speed = (height / 2 / 10) / (seconds_per_hour * frame_per_seconds * 2) 
 
-def draw_beach():
+def draw_sea():
 
     global sea_current_height, sea_target_height
     # Calculate sea target height based on data
@@ -172,8 +172,6 @@ def draw_beach():
         if sea_current_height < sea_target_height:  # Prevent overshooting
             sea_current_height = sea_target_height
 
-    # Draw the sand
-    pygame.draw.rect(screen, sand_color, (0, height / 2, width, height / 3 * 2))
 
     # Draw the sea (filled rectangle)
     pygame.draw.rect(screen, wave_color, (0, height / 2, width, sea_current_height))
@@ -198,6 +196,9 @@ def draw_beach():
     for x, y in water_particles:
         pygame.draw.circle(screen, grain_color, (x, int(y)), random.randint(1, 3))
 
+def draw_beach():
+    # Draw the sand
+    pygame.draw.rect(screen, sand_color, (0, height / 2, width, height / 3 * 2))
 
 seagull_x = 0
 seagull_y = height // 6
@@ -298,7 +299,6 @@ def user_input(key):
 
 # Store stars as a list of (x, y, radius, color)
 stars = []
-
 def user_intereactive_input(button):
 
     mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -307,8 +307,9 @@ def user_intereactive_input(button):
         if height / 2 <= mouse_y <= height / 2 + height / 3 * 2:
             # Create a star at the mouse position
             star_radius = random.randint(2, 5)
+            lifespan = random.randint(30, 3000)
             star_color = (255, 255, random.randint(180, 255))  # Slightly yellowish white
-            stars.append((mouse_x, mouse_y, star_radius, star_color))
+            stars.append((mouse_x, mouse_y, star_radius, star_color, lifespan))
             # print(f"Star created at ({mouse_x}, {mouse_y}) with radius {star_radius}")
             
 
@@ -339,13 +340,30 @@ while running:
     draw_sun()
     draw_moon()
 
-    # Draw all stars
+    draw_beach()
+
+    # Update and draw stars
+    for i in range(len(stars)):
+        x, y, radius, color, lifespan = stars[i]
+        lifespan -= 1  # Decrement lifespan
+        
+        if lifespan > 0:
+            stars[i] = (x, y, radius, color, lifespan)  # Update star with new lifespan
+        else:
+            stars[i] = None  # Mark for removal
+
+    # Remove None values (stars that have expired)
+    stars = [star for star in stars if star is not None]
+
+    # Draw remaining stars
     for star in stars:
         pygame.draw.circle(screen, star[3], (star[0], star[1]), star[2])
 
-    draw_beach()
+    draw_sea()
+
     if show_seagull:
         draw_seagulls()
+
 
     # Draw UI
     draw_ui()
