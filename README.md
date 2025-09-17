@@ -53,6 +53,7 @@ Tide Visualize is an interactive simulation that visualizes tide changes based o
      - Arrow Keys: Adjust the speed of time progression.
      - Up/Down Arrow: Control the volume of the background music.
      - U key: Enable/Disable the user interface.
+     - I key: Pause and unpause the background music.
      - Left Mouse Click: Create stars at the clicked location.
      - Right Mouse Click: Screen capture.
      - Escape Key: Exit the application.
