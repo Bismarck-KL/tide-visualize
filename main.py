@@ -207,6 +207,7 @@ flap_direction = 1  # 1 for moving up, -1 for moving down
 flap_speed = 1      # Speed of flapping
 show_seagull = False
 
+
 def draw_seagulls():
 
     global seagull_x
@@ -271,7 +272,7 @@ def capture_screenshot_without_ui():
     if show_seagull:
         draw_seagulls()
     pygame.display.flip()
-    
+
     # Create screenshot directory if it doesn't exist
     screenshot_dir = "screenshot"
     if not os.path.exists(screenshot_dir):
@@ -283,7 +284,11 @@ def capture_screenshot_without_ui():
     
     # Save the screenshot
     pygame.image.save(screen, screenshot_path)
-    show_ui = Truedef draw_ui():
+
+    show_ui = True
+
+
+def draw_ui():
 
     # Display the current hour in the left side of the screen
     hour_text  = title_font.render(f"{current_day:02}/{current_month:02} - {current_hour}:00", True, black if day else white)
@@ -346,6 +351,7 @@ def user_input(key):
     pygame.mixer.music.set_volume(bgm_volume)
 
          
+
 # Main loop
 while running:
     for event in pygame.event.get():
