@@ -52,6 +52,7 @@ current_day = 0
 
 # music settings
 bgm_volume = 0.2
+env_volume = 0.2
 
 # Set up display
 width, height = 800, 600
@@ -61,16 +62,37 @@ pygame.display.set_caption("Tide Visualize")
 # Initialize pygame
 pygame.init()
 
+loading_screen = pygame.display.set_mode((width, height))
+loading_font = pygame.font.Font(None, 16)
+def show_loading_message(message):
+    loading_screen.fill((0, 0, 0))  # Black background
+    text = loading_font.render(message, True, (255, 255, 255))  # White text
+    text_rect = text.get_rect(center=(width/2, height/2))
+    loading_screen.blit(text, text_rect)
+    pygame.display.flip()
+
+show_loading_message("Initializing audio system...")
 # init mixer
 pygame.mixer.init()
 # Set up music
-bgmfilename = os.getenv('FILENAME', "wave_env.mp3")
+bgmfilename = os.getenv('FILENAME', "bgm.mp3")
+envfilename = os.getenv('FILENAME', "wave_env.mp3")
 try:
+    show_loading_message("Loading music files...")
     pygame.mixer.music.load(bgmfilename)
     pygame.mixer.music.set_volume(bgm_volume)
     pygame.mixer.music.play(loops=-1)  # Loop
 except pygame.error as e:
     print(f"Error loading music file: {e}")
+
+try:
+    show_loading_message("Loading environment sound files...")
+    env_sound = pygame.mixer.Sound(envfilename)  # Create Sound object
+    env_sound.set_volume(env_volume)
+    env_sound.play(loops=-1)
+except pygame.error as e:
+    print(f"Error loading sound file: {e}")
+
     
 show_ui = True
 
@@ -257,6 +279,7 @@ def user_intereactive_input(button):
 
 def capture_screenshot_without_ui():
     global show_ui
+    currect_show_ui = show_ui
     show_ui = False
     # Redraw the scene without UI
     day = 6 < current_hour < 19
@@ -285,7 +308,8 @@ def capture_screenshot_without_ui():
     # Save the screenshot
     pygame.image.save(screen, screenshot_path)
 
-    show_ui = True
+    if currect_show_ui:
+        show_ui = True
 
 
 def draw_ui():
@@ -319,6 +343,7 @@ def user_input(key):
     global move_speed
     global sea_move_speed
     global bgm_volume
+    global show_ui
 
     if key == pygame.K_RIGHT:
         if hour_increment_interval < 3:
@@ -332,6 +357,9 @@ def user_input(key):
             if hour_increment_interval<=0:
                 hour_increment_interval = 0.1
             seconds_per_hour = hour_increment_interval
+    elif key == pygame.K_u:
+            show_ui = not show_ui
+
 
     move_speed = (width / 12) / (seconds_per_hour * (frame_per_seconds / 1)) 
     sea_move_speed = (height / 2 / 10) / (seconds_per_hour * frame_per_seconds * 2) 
@@ -429,7 +457,8 @@ while running:
     # Frame rate
     clock.tick(frame_per_seconds) 
 
-# Stop the music and Quit Pygame 
+# Stop the music/env sound and Quit Pygame 
 pygame.mixer.music.stop()
+env_sound.stop()
 pygame.mixer.quit()
 pygame.quit()
