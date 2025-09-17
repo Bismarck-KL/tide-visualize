@@ -309,7 +309,7 @@ def user_intereactive_input(button):
             star_radius = random.randint(2, 5)
             star_color = (255, 255, random.randint(180, 255))  # Slightly yellowish white
             stars.append((mouse_x, mouse_y, star_radius, star_color))
-            print(f"Star created at ({mouse_x}, {mouse_y}) with radius {star_radius}")
+            # print(f"Star created at ({mouse_x}, {mouse_y}) with radius {star_radius}")
             
 
 
