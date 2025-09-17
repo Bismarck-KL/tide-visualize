@@ -89,12 +89,3 @@ If you would like to listen to or download the original tracks, please visit the
 - [Enviroment sound](https://www.youtube.com/watch?v=Wxs5e7RUW6k&t=5247s&ab_channel=WorldMusicCreation%E9%9F%B3%E6%A8%82%E4%B8%96%E7%95%8C)
 - [Background music](https://www.youtube.com/watch?v=tKzOp1Zfahc&list=RDtKzOp1Zfahc&start_radio=1&ab_channel=dotnote)
 
-*Please ensure that you respect the copyright and licensing agreements associated with these tracks.*
-
-
-## Acknowledgments
-    Thanks to the creators of the libraries used in this project.
-    Special thanks to the contributors and community for their support.
-
-
-    Feel free to modify any section as needed, especially the URLs and any specific details related to your project!
