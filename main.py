@@ -72,6 +72,7 @@ try:
 except pygame.error as e:
     print(f"Error loading music file: {e}")
     
+show_ui = True
 
 # Font setup
 title_font = pygame.font.Font(None, 34) 
@@ -206,7 +207,6 @@ flap_direction = 1  # 1 for moving up, -1 for moving down
 flap_speed = 1      # Speed of flapping
 show_seagull = False
 
-
 def draw_seagulls():
 
     global seagull_x
@@ -235,7 +235,55 @@ def draw_seagulls():
         seagull_y = height // 6  # Reset to initial height
         show_seagull = False
 
-def draw_ui():
+# Store stars as a list of (x, y, radius, color)
+stars = []
+def user_intereactive_input(button):
+
+    global show_ui 
+
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+
+    if button == 1:  # Left click
+        if height / 2 <= mouse_y <= height / 2 + height / 3 * 2:
+            # Create a star at the mouse position
+            star_radius = random.randint(2, 5)
+            lifespan = random.randint(30, 3000)
+            star_color = (255, 255, random.randint(180, 255))  # Slightly yellowish white
+            stars.append((mouse_x, mouse_y, star_radius, star_color, lifespan))
+            # print(f"Star created at ({mouse_x}, {mouse_y}) with radius {star_radius}")
+    elif button == 3:
+        capture_screenshot_without_ui()
+
+def capture_screenshot_without_ui():
+    global show_ui
+    show_ui = False
+    # Redraw the scene without UI
+    day = 6 < current_hour < 19
+    screen.fill(blue if day else night_black)
+    draw_sun()
+    draw_moon()
+    draw_beach()
+    # Draw stars
+    for star in stars:
+        if star is not None:
+            pygame.draw.circle(screen, star[3], (star[0], star[1]), star[2])
+    draw_sea()
+    if show_seagull:
+        draw_seagulls()
+    pygame.display.flip()
+    
+    # Create screenshot directory if it doesn't exist
+    screenshot_dir = "screenshot"
+    if not os.path.exists(screenshot_dir):
+        os.makedirs(screenshot_dir)
+    
+    # Generate filename with current date and time
+    current_time = time.strftime("%Y%m%d_%H%M%S")
+    screenshot_path = os.path.join(screenshot_dir, f"screenshot_{current_time}.png")
+    
+    # Save the screenshot
+    pygame.image.save(screen, screenshot_path)
+    show_ui = Truedef draw_ui():
 
     # Display the current hour in the left side of the screen
     hour_text  = title_font.render(f"{current_day:02}/{current_month:02} - {current_hour}:00", True, black if day else white)
@@ -297,23 +345,7 @@ def user_input(key):
 
     pygame.mixer.music.set_volume(bgm_volume)
 
-# Store stars as a list of (x, y, radius, color)
-stars = []
-def user_intereactive_input(button):
-
-    mouse_x, mouse_y = pygame.mouse.get_pos()
-
-    if button == 1:  # Left click
-        if height / 2 <= mouse_y <= height / 2 + height / 3 * 2:
-            # Create a star at the mouse position
-            star_radius = random.randint(2, 5)
-            lifespan = random.randint(30, 3000)
-            star_color = (255, 255, random.randint(180, 255))  # Slightly yellowish white
-            stars.append((mouse_x, mouse_y, star_radius, star_color, lifespan))
-            # print(f"Star created at ({mouse_x}, {mouse_y}) with radius {star_radius}")
-            
-
-
+         
 # Main loop
 while running:
     for event in pygame.event.get():
@@ -364,12 +396,11 @@ while running:
     if show_seagull:
         draw_seagulls()
 
-
     # Draw UI
-    draw_ui()
+    if show_ui:
+        draw_ui()
 
-    # Update display
-    pygame.display.flip()
+
     # Update display
     pygame.display.flip()
 
