@@ -78,7 +78,8 @@ Tide Visualize is an interactive simulation that visualizes tide changes based o
 
 ## License
     This project is licensed under the MIT License - see the LICENSE file for details.
-    BGM music are using youtube: https://www.youtube.com/watch?v=Wxs5e7RUW6k&t=5247s&ab_channel=WorldMusicCreation%E9%9F%B3%E6%A8%82%E4%B8%96%E7%95%8C
+    Enviroment sound youtube link: https://www.youtube.com/watch?v=Wxs5e7RUW6k&t=5247s&ab_channel=WorldMusicCreation%E9%9F%B3%E6%A8%82%E4%B8%96%E7%95%8C
+    Background sound youtube link: https://www.youtube.com/watch?v=tKzOp1Zfahc&list=RDtKzOp1Zfahc&start_radio=1&ab_channel=dotnote
 
 
 ## Acknowledgments
