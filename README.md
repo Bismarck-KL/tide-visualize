@@ -2,7 +2,7 @@
 
 Tide Visualize is an interactive simulation that visualizes tide changes based on data fetched from a specified URL. The application demonstrates the movement of the sun and moon, along with a beach scene that reacts to tide data. It also incorporates background music and allows user interaction to create stars on the screen.
 
-![Local Screenshot](./assets/img/screenshot.png)
+![Local Screenshot](./assets/img/screenshot_v1.0.png)
 
 ## Features
 
