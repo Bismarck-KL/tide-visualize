@@ -273,23 +273,7 @@ def user_intereactive_input(button):
         capture_screenshot_without_ui()
 
 def capture_screenshot_without_ui():
-    global show_ui
-    currect_show_ui = show_ui
-    show_ui = False
-    # Redraw the scene without UI
-    day = 6 < current_hour < 19
-    screen.fill(blue if day else night_black)
-    draw_sun()
-    draw_moon()
-    draw_beach()
-    # Draw stars
-    for star in stars:
-        if star is not None:
-            pygame.draw.circle(screen, star[3], (star[0], star[1]), star[2])
-    draw_sea()
-    if show_seagull:
-        draw_seagulls()
-    pygame.display.flip()
+
 
     # Create screenshot directory if it doesn't exist
     screenshot_dir = "screenshot"
@@ -302,10 +286,6 @@ def capture_screenshot_without_ui():
     
     # Save the screenshot
     pygame.image.save(screen, screenshot_path)
-
-    if currect_show_ui:
-        show_ui = True
-
 
 def draw_ui():
 
