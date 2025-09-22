@@ -117,7 +117,6 @@ seconds_per_hour = hour_increment_interval  # Total seconds for each hour in the
 frame_per_seconds = 60
 move_speed = (width / 12) / (seconds_per_hour * (frame_per_seconds / 1))  # Speed calculation
 
-
 # Fade settings
 fade_duration = 1000  # Duration of the fade in milliseconds
 fade_steps = frame_per_seconds/2  
@@ -314,6 +313,25 @@ def user_intereactive_input(button):
     elif button == 3:
         capture_screenshot_without_ui()
 
+def draw_star():
+    global stars
+    # Update and draw stars
+    for i in range(len(stars)):
+        x, y, radius, color, lifespan = stars[i]
+        lifespan -= 1  # Decrement lifespan
+        
+        if lifespan > 0:
+            stars[i] = (x, y, radius, color, lifespan)  # Update star with new lifespan
+        else:
+            stars[i] = None  # Mark for removal
+
+    # Remove None values (stars that have expired)
+    stars = [star for star in stars if star is not None]
+
+    # Draw remaining stars
+    for star in stars:
+        pygame.draw.circle(screen, star[3], (star[0], star[1]), star[2])
+
 def capture_screenshot_without_ui():
 
 
@@ -344,7 +362,7 @@ def draw_ui():
     tide_text_rect = tide_text.get_rect()
     tide_text_rect.centerx = width // 2  # Center horizontally
     tide_text_rect.bottom = height - 20  # Position bottom 50 pixels from the bottom
-    pygame.draw.rect(screen, black if day else white, tide_text_rect.inflate(20, 10), 2)
+    pygame.draw.rect(screen, black, tide_text_rect.inflate(20, 10), 2)
     screen.blit(tide_text, tide_text_rect)
 
     # Speed
@@ -400,10 +418,8 @@ def user_input(key):
     pygame.mixer.music.set_volume(bgm_volume)
     env_sound.set_volume(bgm_volume)
          
-
 current_color = blue  # Start with the day color
 target_color = blue   # Initial target color
-
 
 # Main loop
 while running:
@@ -425,44 +441,22 @@ while running:
 
     draw_background()
 
-
     current_date = data_array[current_date_index]
     current_month = int(current_date[0] // 100)
     current_day = int(current_date[0] % 100)
 
-
     # Draw the elements
     draw_sun()
     draw_moon()
-
     draw_beach()
-
-    # Update and draw stars
-    for i in range(len(stars)):
-        x, y, radius, color, lifespan = stars[i]
-        lifespan -= 1  # Decrement lifespan
-        
-        if lifespan > 0:
-            stars[i] = (x, y, radius, color, lifespan)  # Update star with new lifespan
-        else:
-            stars[i] = None  # Mark for removal
-
-    # Remove None values (stars that have expired)
-    stars = [star for star in stars if star is not None]
-
-    # Draw remaining stars
-    for star in stars:
-        pygame.draw.circle(screen, star[3], (star[0], star[1]), star[2])
-
     draw_sea()
-
+    draw_star()
     if show_seagull:
         draw_seagulls()
 
     # Draw UI
     if show_ui:
         draw_ui()
-
 
     # Update display
     pygame.display.flip()
