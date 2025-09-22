@@ -109,12 +109,54 @@ wave_color = (0, 105, 148)    # Dark blue for the waves
 # Text
 border_color = (255, 255, 255)
 
+
 # Star Timing control
 last_time = time.time()
 hour_increment_interval = 0.1  # Interval in seconds for each hour
 seconds_per_hour = hour_increment_interval  # Total seconds for each hour in the animation
 frame_per_seconds = 60
 move_speed = (width / 12) / (seconds_per_hour * (frame_per_seconds / 1))  # Speed calculation
+
+
+# Fade settings
+fade_duration = 1000  # Duration of the fade in milliseconds
+fade_steps = frame_per_seconds/2  
+fade_step_time = fade_duration 
+fade_in_progress = False  # Flag to track fade progress
+fade_alpha = 0  # Current fade level (0 to 1)
+start_color = None
+end_color = None
+
+def draw_background():
+
+    global fade_in_progress, fade_alpha, current_color, start_color, end_color
+
+    # Start a fade if the target color changes
+    if not fade_in_progress and (start_color is None or target_color != start_color):
+        start_color = current_color  # Current color is where we are starting
+        end_color = target_color
+        fade_alpha = 0  # Reset alpha for new fade
+        fade_in_progress = True
+
+    # Handle the fading process
+    if fade_in_progress:
+        fade_alpha += 1 / fade_steps  # Increment alpha
+        if fade_alpha >= 1:  # Fade is complete
+            fade_alpha = 1
+            fade_in_progress = False  # Stop fading
+            current_color = end_color  # Update current color to target
+
+    # Fill the screen with the interpolated color
+    fill_color = interpolate_color(start_color, end_color, fade_alpha)
+    screen.fill(fill_color)
+
+# Function to fade between two colors
+def interpolate_color(color1, color2, alpha):
+    return (
+        int(color1[0] + (color2[0] - color1[0]) * alpha),
+        int(color1[1] + (color2[1] - color1[1]) * alpha),
+        int(color1[2] + (color2[2] - color1[2]) * alpha)
+    )
 
 # Initialize Star positions
 starPositionY = height / 4
@@ -359,6 +401,10 @@ def user_input(key):
     env_sound.set_volume(bgm_volume)
          
 
+current_color = blue  # Start with the day color
+target_color = blue   # Initial target color
+
+
 # Main loop
 while running:
     for event in pygame.event.get():
@@ -374,7 +420,11 @@ while running:
 
     # Set the background color based on the time of day
     day = 6 < current_hour < 19
-    screen.fill(blue if day else night_black)
+    # screen.fill(blue if day else night_black)
+    target_color = blue if day else night_black
+
+    draw_background()
+
 
     current_date = data_array[current_date_index]
     current_month = int(current_date[0] // 100)
