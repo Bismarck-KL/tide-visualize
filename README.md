@@ -50,7 +50,7 @@ Tide Visualize is an interactive simulation that visualizes tide changes based o
   1. Ensure you are in the project directory with the virtual environment activated.
   2. Run the application:
      ```sh
-     python tide_visualize.py     
+     python main.py     
   3. Use the following controls:
      - Arrow Keys: Adjust the speed of time progression.
      - Up/Down Arrow: Control the volume of the background music.
