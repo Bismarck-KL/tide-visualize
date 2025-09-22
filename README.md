@@ -63,7 +63,7 @@ Tide Visualize is an interactive simulation that visualizes tide changes based o
 ## File Structure
 
     tide-visualize/
-    ├── main.py       # Main application file
+    ├── main.py                 # Main application file
     ├── loading_screen.py       # Loading screen file
     ├── requirements.txt        # Python dependencies
     ├── assets/                 # Asset folder
