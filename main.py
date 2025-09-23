@@ -350,7 +350,7 @@ def capture_screenshot_without_ui():
 def draw_ui():
 
     # Display the current hour in the left side of the screen
-    hour_text  = title_font.render(f"{current_day:02}/{current_month:02} - {current_hour}:00", True, black if day else white)
+    hour_text  = title_font.render(f"{current_day:02}/{current_month:02} - {current_hour:02}:00", True, black if day else white)
     text_rect = hour_text.get_rect(topleft = (20, 20))
     # Draw the border rectangle
     pygame.draw.rect(screen, black if day else white, text_rect.inflate(20, 10), 2)
