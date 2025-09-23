@@ -126,7 +126,7 @@ fade_alpha = 0  # Current fade level (0 to 1)
 start_color = None
 end_color = None
 
-def draw_background():
+def draw_sky():
 
     global fade_in_progress, fade_alpha, current_color, start_color, end_color
 
@@ -439,7 +439,7 @@ while running:
     # screen.fill(blue if day else night_black)
     target_color = blue if day else night_black
 
-    draw_background()
+    draw_sky()
 
     current_date = data_array[current_date_index]
     current_month = int(current_date[0] // 100)
