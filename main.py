@@ -69,12 +69,12 @@ loading.show_message("Initializing audio system...")
 # init mixer
 pygame.mixer.init()
 # Set up music
-bgmfilename = os.getenv('FILENAME', "assets/sfx/bgm.mp3")
-envfilename = os.getenv('FILENAME', "assets/sfx/wave_env.mp3")
+bgm_filename = os.getenv('FILENAME', "assets/sfx/bgm.mp3")
+env_filename = os.getenv('FILENAME', "assets/sfx/wave_env.mp3")
 
 try:
     loading.show_message("Loading music files...")
-    pygame.mixer.music.load(bgmfilename)
+    pygame.mixer.music.load(bgm_filename)
     pygame.mixer.music.set_volume(bgm_volume)
     pygame.mixer.music.play(loops=-1)  # Loop
 except pygame.error as e:
@@ -82,7 +82,7 @@ except pygame.error as e:
 
 try:
     loading.show_message("Loading environment sound files...")
-    env_sound = pygame.mixer.Sound(envfilename)  # Create Sound object
+    env_sound = pygame.mixer.Sound(env_filename)  # Create Sound object
     env_sound.set_volume(bgm_volume)
     env_sound.play(loops=-1)
 except pygame.error as e:
@@ -158,7 +158,7 @@ def interpolate_color(color1, color2, alpha):
     )
 
 # Initialize Star positions
-starPositionY = height / 4
+star_position_y = height / 4
 sun_x = 0.0
 moon_x = width / 2  # Start the moon in the middle of the screen
 
@@ -167,13 +167,13 @@ def draw_sun():
 
     # Calculate sun position
     if 6 <= current_hour <= 18:
-        sunTargetX = (width / 12) * (current_hour - 6)  # Move from 0 to width
-        sun_y = starPositionY
+        sun_target_x = (width / 12) * (current_hour - 6)  # Move from 0 to width
+        sun_y = star_position_y
     else:
-        sun_x, sunTargetX, sun_y = -100, -100, -100  # Offscreen
+        sun_x, sun_target_x, sun_y = -100, -100, -100  # Offscreen
 
-    # Smoothly increment sun_x towards sunTargetX
-    if sun_x < sunTargetX:
+    # Smoothly increment sun_x towards sun_target_x
+    if sun_x < sun_target_x:
         sun_x += move_speed  # Adjust speed for smooth movement
 
     # Draw sun if it's visible
@@ -186,10 +186,10 @@ def draw_moon():
     # Calculate moon position
     if current_hour >= 18:
         moonTargetX = (width / 12) * (current_hour - 18)  # Move from center to left
-        moon_y = starPositionY
+        moon_y = star_position_y
     elif current_hour <= 6:
         moonTargetX = width / 2 + (width / 12) * current_hour  # Move right from center
-        moon_y = starPositionY
+        moon_y = star_position_y
     else:
         moon_x, moon_y,moonTargetX = 0, -100,-100  # Offscreen
 
