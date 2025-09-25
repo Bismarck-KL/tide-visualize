@@ -311,7 +311,7 @@ def user_intereactive_input(button):
             stars.append((mouse_x, mouse_y, star_radius, star_color, lifespan))
             # print(f"Star created at ({mouse_x}, {mouse_y}) with radius {star_radius}")
     elif button == 3:
-        capture_screenshot_without_ui()
+        capture_screenshot()
 
 def draw_star():
     global stars
@@ -332,7 +332,7 @@ def draw_star():
     for star in stars:
         pygame.draw.circle(screen, star[3], (star[0], star[1]), star[2])
 
-def capture_screenshot_without_ui():
+def capture_screenshot():
 
 
     # Create screenshot directory if it doesn't exist
